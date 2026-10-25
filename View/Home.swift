@@ -9,10 +9,25 @@ import SwiftUI
 
 struct Home: View {
     var body: some View {
-        VStack{
+        VStack {
+            HStack {
+                Spacer()
+
+                #if os(macOS)
+                    Button(role: .destructive) {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Image(systemName: "power").foregroundStyle(.red)
+                    }.buttonBorderShape(.circle)
+                #endif
+            }
+
             CurrentWallpaperView()
             TodayWallpaperView()
-        }.padding()
+
+        }
+        .frame(minHeight: AppConfig.minHeight)
+        .padding([.leading, .trailing, .bottom])
     }
 }
 
