@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		ACE8657A308B34E8005E8E65 /* Wallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACE8658A308B35A8005E8E65 /* Wallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		ACE8657C308B34E8005E8E65 /* Wallpaper */ = {
+		AC971DC2308B4478002D5854 /* Module */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Wallpaper;
+			path = Module;
+			sourceTree = "<group>";
+		};
+		AC971DD7308B5E33002D5854 /* Model */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ACE86589308B3526005E8E65 /* View */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,17 +42,11 @@
 		ACE86571308B34E8005E8E65 = {
 			isa = PBXGroup;
 			children = (
-				ACE8657C308B34E8005E8E65 /* Wallpaper */,
-				ACE8657B308B34E8005E8E65 /* Products */,
+				AC971DC2308B4478002D5854 /* Module */,
+				ACE86589308B3526005E8E65 /* View */,
+				ACE8658A308B35A8005E8E65 /* Wallpaper.app */,
+				AC971DD7308B5E33002D5854 /* Model */,
 			);
-			sourceTree = "<group>";
-		};
-		ACE8657B308B34E8005E8E65 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ACE8657A308B34E8005E8E65 /* Wallpaper.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,13 +65,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				ACE8657C308B34E8005E8E65 /* Wallpaper */,
+				AC971DC2308B4478002D5854 /* Module */,
+				AC971DD7308B5E33002D5854 /* Model */,
+				ACE86589308B3526005E8E65 /* View */,
 			);
 			name = Wallpaper;
 			packageProductDependencies = (
 			);
 			productName = Wallpaper;
-			productReference = ACE8657A308B34E8005E8E65 /* Wallpaper.app */;
+			productReference = ACE8658A308B35A8005E8E65 /* Wallpaper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +101,7 @@
 			mainGroup = ACE86571308B34E8005E8E65;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = ACE8657B308B34E8005E8E65 /* Products */;
+			productRefGroup = ACE86571308B34E8005E8E65;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -244,12 +250,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -286,12 +293,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
