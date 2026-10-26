@@ -12,7 +12,7 @@ extension WallpaperProviders {
         case .bing:
             return URL(
                 string:
-                    "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=us"
+                    "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=us&rs=1"
             )!
         }
     }

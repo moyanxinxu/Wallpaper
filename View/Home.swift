@@ -22,12 +22,11 @@ struct Home: View {
                 #endif
             }
 
-            CurrentWallpaperView()
+//            CurrentWallpaperView()
             TodayWallpaperView()
-
         }
-        .frame(minHeight: AppConfig.minHeight)
-        .padding([.leading, .trailing, .bottom])
+        .frame(minWidth: AppConfig.minWidth, minHeight: AppConfig.minHeight)
+        .padding()
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  error.swift
+//  Error.swift
 //  Wallpaper
 //
 //  Created by moyanxinxu on 2026/10/24.
@@ -12,4 +12,8 @@ enum AppError: Error {
     case invalidPathType
     case unableGetCurrentWallpaper
     case unableGetTodayWallpaper
+    case unableCreateDirectory
+    case unableGetFiles
+    
+    case internalError
 }

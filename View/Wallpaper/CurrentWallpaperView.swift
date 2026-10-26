@@ -21,9 +21,7 @@ struct CurrentWallpaperView: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: WallpaperConfig.cornerRadius
-                        )
+                        RoundedRectangle(cornerRadius: ViewConfig.cornerRadius)
                     )
             } else {
                 Image(systemName: "photo")

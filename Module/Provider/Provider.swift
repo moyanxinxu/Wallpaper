@@ -39,7 +39,8 @@ struct BingProvider: WallpaperProvider {
             else {
                 throw URLError(.badURL)
             }
-            return Wallpaper(url: "https://www.bing.com" + image.url)
+            //            https://cn.bing.com/th?id=OHR.SitovoWaterfall_FR-FR3730397148_UHD.jpeg
+            return Wallpaper(url: "https://www.bing.com" + image.urlbase + "_UHD.jpg")
         }
     }
 }

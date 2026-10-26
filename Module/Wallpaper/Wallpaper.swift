@@ -7,6 +7,8 @@
 
 import AppKit
 
+let ImageFormat = ["jpg", "jpeg", "png"]
+
 ///获取mac当前桌面壁纸
 func getCurrentWallpaperUrl() throws -> URL? {
     guard let screen = NSScreen.main else {
@@ -16,13 +18,8 @@ func getCurrentWallpaperUrl() throws -> URL? {
     return NSWorkspace.shared.desktopImageURL(for: screen)
 }
 
-///依据URL设置当前桌面的壁纸
-func setupWallpaperForTargetScreen(from url: URL) -> Bool {
-    return true
-}
-
 func setupWallpaperForAllScreen(_ url: URL) throws {
-    if !isFileExisted(at: url) {
+    guard try isFileExisted(at: url) else {
         throw AppError.unableGetTodayWallpaper
     }
 
@@ -36,23 +33,10 @@ func setupWallpaperForAllScreen(_ url: URL) throws {
     }
 }
 
-func getTodayWallpaperUrl() throws -> URL {
-    let time = try getNowDate()
-    let dateDirectory = getAppDateDirectoryUrl()
-    let fileUrl =
-        dateDirectory
-        .appendingPathComponent(time)
-        .appendingPathExtension(FileFormatSuffix.jpg.rawValue)
+func getWallpaperUrls(in Url: URL) throws -> [URL] {
+    let files = try getFiles(in: Url)
 
-    return fileUrl
-}
-
-func loadTodayWallpaperIfExisted() throws -> URL? {
-    let fileUrl = try getTodayWallpaperUrl()
-
-    guard isFileExisted(at: fileUrl) else { return nil }
-
-    return fileUrl
+    return files.filter { ImageFormat.contains($0.pathExtension.lowercased()) }
 }
 
 enum DownloadResult {

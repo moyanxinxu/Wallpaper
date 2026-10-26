@@ -10,16 +10,12 @@ enum AppConfig {
     static let documets = "Documents"
     static let downloadWallpaperTitle = "保存壁纸"
     static let area = "us"
-
-    static let minHeight = 400.0
+    static let dailyWallpaperNumber = 1
+    static let minHeight = 200.0
+    static let minWidth = 300.0
 }
 
-enum WallpaperConfig {
+enum ViewConfig {
     //    static let width =
     static let cornerRadius = 6.0
-}
-
-enum FileFormatSuffix: String {
-    case jpg = "jpg"
-    case png = "png"
 }

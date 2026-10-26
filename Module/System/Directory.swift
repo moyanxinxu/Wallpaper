@@ -7,26 +7,17 @@
 
 import AppKit
 
-func getTempDirectoryUrl() -> URL {
-    return FileManager.default.temporaryDirectory
-}
-
-//func getDocumentDirectoryUrl() -> URL {
-//    return URL(string: NSHomeDirectory() + "/Documents")!
-//}
-
 func getAppDateDirectoryUrl() -> URL {
     return URL(fileURLWithPath: NSHomeDirectory())
         .appendingPathComponent(AppConfig.documets, isDirectory: true)
         .appendingPathComponent(AppConfig.name, isDirectory: true)
 }
 
-func genTempUrlWithExtension(_ suffix: FileFormatSuffix) -> URL {
-    let tempDir = getTempDirectoryUrl()
-    return
-        tempDir
-        .appendingPathComponent(UUID().uuidString)
-        .appendingPathExtension(suffix.rawValue)
+func getTodayDirectory() throws -> URL {
+    let date = try getNowDate()
+    let directory = getAppDateDirectoryUrl()
+
+    return directory.appending(path: date, directoryHint: .isDirectory)
 }
 
 /// 删除文件
@@ -40,8 +31,14 @@ func deleteFile(at url: URL) throws {
     try FileManager.default.removeItem(at: url)
 }
 
-/// 判断文件路径是否存在
-func isFileExisted(at url: URL) -> Bool {
+/// 查看文件或文件夹是否存在
+func isFileExisted(at url: URL) throws -> Bool {
+    let _ = false
+
+    if try getUrlType(at: url) != .typeRegular {
+        throw AppError.invalidPathType
+    }
+
     return FileManager.default.fileExists(atPath: url.path())
 }
 
@@ -64,6 +61,39 @@ func hilightFilesInFinder(_ urls: [URL]) {
         }
         return URL(fileURLWithPath: url.path())
     }
-    
+
     NSWorkspace.shared.activateFileViewerSelecting(fileUrls)
+}
+
+func createDirectory(_ url: URL) throws {
+    if !url.hasDirectoryPath {
+        throw AppError.invalidPathType
+    }
+
+    do {
+        try FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: true,
+            attributes: nil
+        )
+    } catch {
+        throw AppError.unableCreateDirectory
+    }
+}
+
+func getFiles(in url: URL) throws -> [URL] {
+    let urls: [URL]
+
+    do {
+
+        urls = try FileManager.default.contentsOfDirectory(
+            at: url,
+            includingPropertiesForKeys: nil
+        )
+
+    } catch {
+        throw AppError.unableGetFiles
+    }
+
+    return urls
 }
