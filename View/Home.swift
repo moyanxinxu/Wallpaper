@@ -14,15 +14,22 @@ struct Home: View {
                 Spacer()
 
                 #if os(macOS)
-                    Button(role: .destructive) {
+                    Button {
                         NSApplication.shared.terminate(nil)
                     } label: {
-                        Image(systemName: "power").foregroundStyle(.red)
-                    }.buttonBorderShape(.circle)
+                        Image(systemName: "power")
+                            .foregroundStyle(.white)
+                            .frame(
+                                width: ViewConfig.stopAppButtonSize,
+                                height: ViewConfig.stopAppButtonSize
+                            )
+                            .background(.blue, in: Circle())
+                    }
+                    .buttonStyle(.plain)
                 #endif
             }
 
-//            CurrentWallpaperView()
+            //            CurrentWallpaperView()
             TodayWallpaperView()
         }
         .frame(minWidth: AppConfig.minWidth, minHeight: AppConfig.minHeight)

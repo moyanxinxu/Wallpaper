@@ -45,27 +45,12 @@ enum DownloadResult {
 
 }
 
+@discardableResult
 /// 根据url下载壁纸
-func downloadWallpaper(from url: URL, target: URL) async -> DownloadResult {
-
-    //    let components = Calendar.current.dateComponents(
-    //        [.year, .month, .day],
-    //        from: Date()
-    //    )
-    //
-    //    let pannel = NSSavePanel()
-    //    pannel.title = AppConfig.downloadWallpaperTitle
-    //    pannel.allowedContentTypes = [.jpeg]
-    //    pannel.canCreateDirectories = true
+func downloadWallpaper(from url: String, target: URL) async -> DownloadResult {
 
     do {
-        let (data, response) = try await URLSession.shared.data(from: url)
-
-        if let httpResponse = response as? HTTPURLResponse,
-            !(200...299).contains(httpResponse.statusCode)
-        {
-            throw URLError(.badServerResponse)
-        }
+        let data = try await ApiRequest(url).getDate()
 
         guard let image = NSImage(data: data),
             image.isValid

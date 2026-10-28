@@ -53,15 +53,18 @@ struct TodayWallpaperView: View {
                 let wallpapers = try await provider.fetch()
 
                 await withTaskGroup(of: Void.self) { group in
-                    for (idx, wallpaper) in wallpapers[0...1].enumerated() {
+                    for (idx, wallpaper) in wallpapers[
+                        0...AppConfig.dailyWallpaperNumber - 1
+                    ]
+                    .enumerated() {
                         group.addTask {
                             let target = todayDirectory.appendingPathComponent(
                                 "\(idx)",
                                 conformingTo: .jpeg
                             )
 
-                            _ = await downloadWallpaper(
-                                from: URL(string: wallpaper.url)!,  //TODO
+                            await downloadWallpaper(
+                                from: wallpaper.url,
                                 target: target
                             )
                         }

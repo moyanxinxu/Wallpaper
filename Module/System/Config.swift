@@ -17,5 +17,6 @@ enum AppConfig {
 
 enum ViewConfig {
     //    static let width =
+    static let stopAppButtonSize = 18.0
     static let cornerRadius = 6.0
 }
