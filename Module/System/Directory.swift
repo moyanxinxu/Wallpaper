@@ -40,18 +40,20 @@ func deleteFile(at url: URL) throws {
 
 /// 查看文件或文件夹是否存在
 func isFileExisted(at url: URL) throws -> Bool {
-    let _ = false
-
     if try getUrlType(at: url) != .typeRegular {
         throw AppError.invalidPathType
     }
 
-    return FileManager.default.fileExists(atPath: url.path())
+    return FileManager.default.fileExists(
+        atPath: url.path(percentEncoded: false)
+    )
 }
 
 /// 获取路径类型
 func getUrlType(at url: URL) throws -> FileAttributeType {
-    let items = try FileManager.default.attributesOfItem(atPath: url.path())
+    let items = try FileManager.default.attributesOfItem(
+        atPath: url.path(percentEncoded: false)
+    )
 
     guard let type = items[.type] as? FileAttributeType else {
         throw AppError.unableGetUrlType
@@ -90,17 +92,13 @@ func createDirectory(_ url: URL) throws {
 }
 
 func getFiles(in url: URL) throws -> [URL] {
-    let urls: [URL]
-
     do {
-        urls = try FileManager.default.contentsOfDirectory(
+        return try FileManager.default.contentsOfDirectory(
             at: url,
-            includingPropertiesForKeys: nil
+            includingPropertiesForKeys: nil,
+            options: [.skipsHiddenFiles]
         )
-
     } catch {
         throw AppError.unableGetFiles
     }
-
-    return urls
 }

@@ -25,11 +25,7 @@ func setupWallpaperForAllScreen(_ url: URL) throws {
 
     let workspace = NSWorkspace.shared
     for screen in NSScreen.screens {
-        try workspace.setDesktopImageURL(
-            URL(fileURLWithPath: url.path()),
-            for: screen,
-            options: [:]
-        )
+        try workspace.setDesktopImageURL(url, for: screen)
     }
 }
 
