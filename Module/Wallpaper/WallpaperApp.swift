@@ -11,8 +11,7 @@ import SwiftUI
 @main
 struct WallpaperApp: App {
     var body: some Scene {
-        MenuBarExtra("wallpaper", systemImage: "photo") {
-            Home()
-        }.menuBarExtraStyle(.window)
+        MenuBarExtra(AppConfig.name, systemImage: "photo") { Home() }
+            .menuBarExtraStyle(.window)
     }
 }

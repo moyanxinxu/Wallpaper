@@ -7,7 +7,7 @@
 
 import AppKit
 
-func getAppDateDirectoryUrl() -> URL {
+func getAppDateDirectory() -> URL {
     return URL(fileURLWithPath: NSHomeDirectory())
         .appendingPathComponent(AppConfig.documets, isDirectory: true)
         .appendingPathComponent(AppConfig.name, isDirectory: true)
@@ -15,9 +15,16 @@ func getAppDateDirectoryUrl() -> URL {
 
 func getTodayDirectory() throws -> URL {
     let date = try getNowDate()
-    let directory = getAppDateDirectoryUrl()
+    let directory = getAppDateDirectory()
 
     return directory.appending(path: date, directoryHint: .isDirectory)
+}
+
+func createTodayDirectory() throws -> URL {
+    let todayDirectory = try getTodayDirectory()
+    try createDirectory(todayDirectory)
+
+    return todayDirectory
 }
 
 /// 删除文件
@@ -58,8 +65,9 @@ func hilightFilesInFinder(_ urls: [URL]) {
     let fileUrls = urls.map { url -> URL in
         if url.isFileURL {
             return url.standardizedFileURL
+        } else {
+            return URL(fileURLWithPath: url.path())
         }
-        return URL(fileURLWithPath: url.path())
     }
 
     NSWorkspace.shared.activateFileViewerSelecting(fileUrls)
@@ -85,7 +93,6 @@ func getFiles(in url: URL) throws -> [URL] {
     let urls: [URL]
 
     do {
-
         urls = try FileManager.default.contentsOfDirectory(
             at: url,
             includingPropertiesForKeys: nil

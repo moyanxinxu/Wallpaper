@@ -33,10 +33,18 @@ func setupWallpaperForAllScreen(_ url: URL) throws {
     }
 }
 
-func getWallpaperUrls(in Url: URL) throws -> [URL] {
-    let files = try getFiles(in: Url)
+func getTodayWallpaperUrl() throws -> URL? {
+    let todayDiectory = try getTodayDirectory()
+    let files = try getFiles(in: todayDiectory)
 
-    return files.filter { ImageFormat.contains($0.pathExtension.lowercased()) }
+    guard
+        let todayWallpaperUrl = files.first(
+            where: { ImageFormat.contains($0.pathExtension.lowercased()) })
+    else {
+        return nil
+    }
+
+    return todayWallpaperUrl
 }
 
 enum DownloadResult {

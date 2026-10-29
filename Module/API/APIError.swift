@@ -10,4 +10,5 @@ enum APIError: Error {
     case invalidUrl
     case invalidResponse
     case httpError(statusCode: Int, data: Data)
+    case badResponse
 }

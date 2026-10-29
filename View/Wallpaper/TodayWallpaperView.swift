@@ -9,9 +9,9 @@ import AppKit
 import SwiftUI
 internal import UniformTypeIdentifiers
 
-private enum ViewState {
+fileprivate enum ViewState {
     case loading
-    case success([URL])
+    case success(url: URL, title: String)
     case failed(String)
 }
 
@@ -22,58 +22,51 @@ struct TodayWallpaperView: View {
 
     var body: some View {
         VStack {
-            Text("今日壁纸")
-                .frame(maxWidth: .infinity, alignment: .leading)
-
             switch state {
             case .loading:
                 ProgressView()
-            case .success(let wallpapers):
-                WallpaperCarousel(wallpapers: wallpapers)
+            case .success(let url, let title):
+                WallpaperCarousel(url: url, title: title)
             case .failed(_):
                 Image(systemName: "exclamationmark.triangle")
             }
-
-        }.task { await loadWallpapers() }
+        }.task { await loadWallpaper() }
     }
 
-    private func loadWallpapers() async {
+    private func loadWallpaper() async {
         let lifecycle = Lifecycle<Void>(
-            onMutate: { state = .loading },
             onError: { error in state = .failed(error.localizedDescription) }
         )
 
         await lifecycle.invoke {
-            var wallpaperUrls: [URL]
-            let todayDirectory = try getTodayDirectory()
-            try createDirectory(todayDirectory)
-            wallpaperUrls = try getWallpaperUrls(in: todayDirectory)
 
-            if wallpaperUrls.isEmpty {
-                let wallpapers = try await provider.fetch()
+            let todayDirectory = try createTodayDirectory()
 
-                await withTaskGroup(of: Void.self) { group in
-                    for (idx, wallpaper) in wallpapers[
-                        0...AppConfig.dailyWallpaperNumber - 1
-                    ]
-                    .enumerated() {
-                        group.addTask {
-                            let target = todayDirectory.appendingPathComponent(
-                                "\(idx)",
-                                conformingTo: .jpeg
-                            )
-
-                            await downloadWallpaper(
-                                from: wallpaper.url,
-                                target: target
-                            )
-                        }
-                    }
-                }
+            if let wallpaperUrl = try getTodayWallpaperUrl() {
+                let title =
+                    wallpaperUrl
+                    .deletingPathExtension()
+                    .lastPathComponent
+                state = .success(url: wallpaperUrl, title: title)
+                return
             }
 
-            wallpaperUrls = try getFiles(in: todayDirectory)
-            state = .success(wallpaperUrls)
+            guard let wallpaper = try await provider.fetch().first else {
+                state = .failed("bad response from bing api")
+                return
+            }
+
+            let target = todayDirectory.appendingPathComponent(
+                wallpaper.title,
+                conformingTo: .jpeg
+            )
+
+            await downloadWallpaper(from: wallpaper.url, target: target)
+            state = .success(url: target, title: wallpaper.title)
         }
     }
+}
+
+#Preview {
+    TodayWallpaperView()
 }

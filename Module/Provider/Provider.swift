@@ -15,32 +15,19 @@ protocol WallpaperProvider {
 }
 
 struct BingProvider: WallpaperProvider {
+    let host = WallpaperProviders.bing.host
 
     func fetch() async throws -> [Wallpaper] {
-        let (data, response) = try await URLSession.shared.data(
-            from: WallpaperProviders.bing.apiUrl
-        )
+        let data = try await ApiRequest(WallpaperProviders.bing.apiUrl)
+            .query("format", value: "js")
+            .query("idx", value: "0")
+            .query("n", value: "1")
+            .query("mkt", value: "zh-CN")
+            .getJson(BingWallpaperResponseSchema.self)
+            .images
 
-        guard let response = response as? HTTPURLResponse,
-            (200..<300).contains(response.statusCode)
-        else { throw URLError(.badServerResponse) }
-
-        let result = try JSONDecoder().decode(
-            BingWallpaperResponseSchema.self,
-            from: data
-        )
-
-        return try result.images.map { image in
-            guard
-                URL(
-                    string: image.url,
-                    relativeTo: URL(string: "https://www.bing.com")
-                )?.absoluteURL != nil
-            else {
-                throw URLError(.badURL)
-            }
-            //            https://cn.bing.com/th?id=OHR.SitovoWaterfall_FR-FR3730397148_UHD.jpeg
-            return Wallpaper(url: "https://www.bing.com" + image.urlbase + "_UHD.jpg")
+        return data.map { img in
+            Wallpaper(url: host + img.urlbase + "_UHD.jpg", title: img.title)
         }
     }
 }

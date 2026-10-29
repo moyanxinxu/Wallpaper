@@ -9,34 +9,10 @@ import SwiftUI
 
 struct Home: View {
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-
-                #if os(macOS)
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Image(systemName: "power")
-                            .foregroundStyle(.white)
-                            .frame(
-                                width: ViewConfig.stopAppButtonSize,
-                                height: ViewConfig.stopAppButtonSize
-                            )
-                            .background(.blue, in: Circle())
-                    }
-                    .buttonStyle(.plain)
-                #endif
-            }
-
-            //            CurrentWallpaperView()
-            TodayWallpaperView()
-        }
-        .frame(minWidth: AppConfig.minWidth, minHeight: AppConfig.minHeight)
-        .padding()
+        TodayWallpaperView()
     }
 }
 
 #Preview {
-    Home()
+    Home().frame(width: 256, height: 256)
 }

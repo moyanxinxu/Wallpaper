@@ -9,13 +9,13 @@ import Foundation
 
 struct Wallpaper: Identifiable, Decodable {
     let id: String
-    //    let title: String
     let url: String
+    let title: String
 
-    init(id: String = UUID().uuidString, url: String) {
+    init(id: String = UUID().uuidString, url: String, title: String) {
         self.id = id
-        //        self.title = title
         self.url = url
+        self.title = title
     }
 
     var nsUrl: URL? {
@@ -30,7 +30,7 @@ struct BingWallpaperSchema: Decodable {
     //    let enddate: String
     let url: String
     let urlbase: String
-    //    let copyright: String
+    let title: String
     //    let copyrightlink:String
     //    let title: String
     //    let quiz: String

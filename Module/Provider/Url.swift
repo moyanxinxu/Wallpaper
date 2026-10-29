@@ -7,13 +7,15 @@
 import SwiftUI
 
 extension WallpaperProviders {
-    var apiUrl: URL {
+    var apiUrl: String {
         switch self {
-        case .bing:
-            return URL(
-                string:
-                    "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=us&rs=1"
-            )!
+        case .bing: "https://www.bing.com/HPImageArchive.aspx"
+        }
+    }
+
+    var host: String {
+        switch self {
+        case .bing: "https://www.bing.com"
         }
     }
 }
