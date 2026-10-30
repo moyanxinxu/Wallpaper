@@ -18,19 +18,18 @@ struct WallpaperCarousel: View {
         VStack {
             HStack {
                 Text(title).foregroundStyle(.primary)
-                
+
                 Spacer()
-                
-                #if os(macOS)
-                    Button("退出", systemImage: "power") {
-                        NSApplication.shared.terminate(nil)
-                    }
-                    .labelStyle(.iconOnly)
-                    .clipShape(.circle)
-                    .opacity(hovering ? 1 : 0)
-                    .offset(y: hovering ? 6 : 0)
-                    .animation(.easeInOut(duration: 0.2), value: hovering)
-                #endif
+
+                Button("退出", systemImage: "power") {
+                    NSApplication.shared.terminate(nil)
+                }
+                .labelStyle(.iconOnly)
+                .clipShape(.circle)
+                .opacity(hovering ? 1 : 0)
+                .offset(y: hovering ? 6 : 0)
+                .animation(.easeInOut(duration: 0.2), value: hovering)
+
             }.frame(maxWidth: .infinity)
 
             Spacer()

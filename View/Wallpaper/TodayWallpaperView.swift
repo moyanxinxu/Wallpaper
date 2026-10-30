@@ -28,7 +28,7 @@ struct TodayWallpaperView: View {
             case .success(let url, let title):
                 WallpaperCarousel(url: url, title: title)
             case .failed(_):
-                Image(systemName: "exclamationmark.triangle")
+                ErrorView().padding(8)
             }
         }.task { await loadWallpaper() }
     }
