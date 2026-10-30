@@ -42,16 +42,24 @@ struct WallpaperCarousel: View {
 
                 Spacer()
 
-                ControlGroup {
-                    Button("在Finder中显示", systemImage: "folder") {
+                Menu {
+                    Button {
                         hilightFilesInFinder([url])
+                    } label: {
+                        Label("在 Finder 中显示", systemImage: "folder")
                     }
 
-                    ShareLink(item: url.path()) {
+                    ShareLink(item: url) {
                         Label("分享", systemImage: "square.and.arrow.up")
                     }
+                } label: {
+                    Image(systemName: "ellipsis")
                 }
+                .clipShape(.circle)
+                .menuIndicator(.hidden)
+                .labelStyle(.titleAndIcon)
                 .fixedSize()
+
             }
             .opacity(hovering ? 1 : 0)
             .offset(y: hovering ? 0 : 6)

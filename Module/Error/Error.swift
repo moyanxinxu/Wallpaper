@@ -15,5 +15,6 @@ enum AppError: Error {
     case unableCreateDirectory
     case unableGetFiles
     
+    case unableDownloadWallpaper
     case internalError
 }

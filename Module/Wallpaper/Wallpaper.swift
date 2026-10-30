@@ -43,28 +43,12 @@ func getTodayWallpaperUrl() throws -> URL? {
     return todayWallpaperUrl
 }
 
-enum DownloadResult {
-    case success(URL)
-    case failure(Error)
+func downloadWallpaper(_ url: String, target: URL) async throws {
+    let data = try await ApiRequest(url).getDate()
 
-}
-
-@discardableResult
-/// 根据url下载壁纸
-func downloadWallpaper(from url: String, target: URL) async -> DownloadResult {
-
-    do {
-        let data = try await ApiRequest(url).getDate()
-
-        guard let image = NSImage(data: data),
-            image.isValid
-        else {
-            throw URLError(.cannotDecodeContentData)
-        }
-
-        try data.write(to: target, options: .atomic)
-        return .success(target)
-    } catch {
-        return .failure(error)
+    guard let image = NSImage(data: data), image.isValid else {
+        throw URLError(.cannotDecodeContentData)
     }
+
+    try data.write(to: target, options: .atomic)
 }
