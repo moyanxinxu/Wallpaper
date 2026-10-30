@@ -10,6 +10,7 @@ import SwiftUI
 internal import UniformTypeIdentifiers
 
 fileprivate enum ViewState {
+    case waitNetwork
     case loading
     case success(url: URL, title: String)
     case failed(String)
@@ -27,7 +28,7 @@ struct TodayWallpaperView: View {
                 ProgressView()
             case .success(let url, let title):
                 WallpaperCarousel(url: url, title: title)
-            case .failed(_):
+            case .failed(_), .waitNetwork:
                 ErrorView().padding(8)
             }
         }.task { await loadWallpaper() }
@@ -35,7 +36,8 @@ struct TodayWallpaperView: View {
 
     private func loadWallpaper() async {
         let lifecycle = Lifecycle<Void>(
-            onError: { error in state = .failed(error.localizedDescription) }
+            onError: { error in state = .failed(error.localizedDescription) },
+            onSettled: { NetworkManager.shared.stopMonitoring() }
         )
 
         await lifecycle.invoke {
@@ -48,6 +50,11 @@ struct TodayWallpaperView: View {
                     .deletingPathExtension()
                     .lastPathComponent
                 state = .success(url: wallpaperUrl, title: title)
+                return
+            }
+
+            guard NetworkManager.shared.isConnectedToWifi == true else {
+                state = .waitNetwork
                 return
             }
 
