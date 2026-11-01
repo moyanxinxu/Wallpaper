@@ -58,13 +58,13 @@ final class PermissionManager {
     func requireAllPermissions() async {
         for permission in permissions.values {
             if await permission.status() == .notDetermined {
-                try! await permission.requirePermission()
+                _ = try? await permission.requirePermission()
             }
         }
     }
 }
 
-func RequirePermissions() async throws {
+func RequirePermissions() async {
     PermissionManager.shared
         .register(
             PermissionApplicant.notification,

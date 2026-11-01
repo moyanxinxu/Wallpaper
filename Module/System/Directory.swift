@@ -40,10 +40,6 @@ func deleteFile(at url: URL) throws {
 
 /// 查看文件或文件夹是否存在
 func isFileExisted(at url: URL) throws -> Bool {
-    if try getUrlType(at: url) != .typeRegular {
-        throw AppError.invalidPathType
-    }
-
     return FileManager.default.fileExists(
         atPath: url.path(percentEncoded: false)
     )
