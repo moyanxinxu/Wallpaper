@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		ACE8658A308B35A8005E8E65 /* Wallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACE8658A308B35A8005E8E65 /* Wallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Wallpaper.app; path = /Users/moyanxinxu/Documents/Xcode/Wallpaper/build/Debug/Wallpaper.app; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,7 +44,6 @@
 			children = (
 				AC971DC2308B4478002D5854 /* Module */,
 				ACE86589308B3526005E8E65 /* View */,
-				ACE8658A308B35A8005E8E65 /* Wallpaper.app */,
 				AC971DD7308B5E33002D5854 /* Model */,
 			);
 			sourceTree = "<group>";
