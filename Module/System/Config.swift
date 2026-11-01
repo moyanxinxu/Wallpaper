@@ -9,4 +9,5 @@ enum AppConfig {
     static let name = "Wallpaper"
     static let documets = "Documents"
     static let downloadWallpaperTitle = "保存壁纸"
+    static let notificationTitle = "设置成功"
 }

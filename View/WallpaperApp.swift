@@ -10,6 +10,11 @@ import SwiftUI
 
 @main
 struct WallpaperApp: App {
+    init() {
+        // 1. 获取权限
+        Task { try! await RequirePermissions() }
+    }
+
     var body: some Scene {
         MenuBarExtra(AppConfig.name, systemImage: "photo") { Home() }
             .menuBarExtraStyle(.window)

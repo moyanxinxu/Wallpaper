@@ -36,7 +36,19 @@ struct WallpaperCarousel: View {
 
             HStack {
                 Button("应用壁纸", systemImage: "laptopcomputer") {
-                    try? setupWallpaperForAllScreen(url)
+                    let notification = NotificationManager.shared
+                    do { try setupWallpaperForAllScreen(url) } catch {
+                        Task {
+                            let body = "设置失败"
+                            try await notification.send(title: body, body: "")
+                        }
+                    }
+
+                    let body = "「" + getFileName(url) + "」"
+                    let title = AppConfig.notificationTitle
+                    Task {
+                        try await notification.send(title: title, body: body)
+                    }
                 }
                 .buttonStyle(.borderedProminent)
 
