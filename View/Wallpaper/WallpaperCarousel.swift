@@ -14,6 +14,31 @@ struct WallpaperCarousel: View {
 
     @State private var hovering = false
 
+    private func setupWallpaperButton() -> some View {
+        let notification = NotificationManager.shared
+
+        let licecycle = Lifecycle<Void>(
+            onSuccess: {
+                Task {
+                    let title = "「" + getFileName(url) + "」"
+                    try? await notification.send(title: title, body: "设置成功")
+                }
+            },
+            onError: { _ in
+                Task {
+                    let title = "设置失败"
+                    try? await notification.send(title: title, body: "")
+                }
+            }
+        )
+
+        return Button("应用壁纸", systemImage: "laptopcomputer") {
+            Task {
+                await licecycle.invoke { try setupWallpaperForAllScreen(url) }
+            }
+        }.buttonStyle(.borderedProminent)
+    }
+
     private func wallpaperButtonGroup() -> some View {
         VStack {
             HStack {
@@ -35,22 +60,8 @@ struct WallpaperCarousel: View {
             Spacer()
 
             HStack {
-                Button("应用壁纸", systemImage: "laptopcomputer") {
-                    let notification = NotificationManager.shared
-                    do { try setupWallpaperForAllScreen(url) } catch {
-                        Task {
-                            let body = "设置失败"
-                            try await notification.send(title: body, body: "")
-                        }
-                    }
 
-                    let body = "「" + getFileName(url) + "」"
-                    let title = AppConfig.notificationTitle
-                    Task {
-                        try await notification.send(title: title, body: body)
-                    }
-                }
-                .buttonStyle(.borderedProminent)
+                setupWallpaperButton()
 
                 Spacer()
 
